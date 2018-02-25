@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/sd"
+    tools:context="com.appsinventiv.numberscraper.Pakwheels">
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="cursive"
+        android:text="Pakwheels Scraper"
+        android:textSize="35dp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/geturl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_below="@+id/imageView3"
+            android:layout_marginTop="36dp"
+            android:layout_weight="1"
+            android:hint="Url.." />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textInputLayout11"
+        android:layout_marginTop="45dp"
+        android:layout_below="@+id/textInputLayout10"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:hint="Start page.."
+            android:id="@+id/start" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textInputLayout11"
+        android:layout_alignParentEnd="true">
+
+        <EditText
+            android:id="@+id/end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:hint="End page.." />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout12"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout11"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp">
+
+
+        <EditText
+            android:id="@+id/filen"
+            android:layout_width="match_parent"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:layout_height="wrap_content"
+            android:hint="Filename.." />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textInputLayout12"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="57dp"
+        android:layout_weight="1"
+        android:width="250dp"
+        android:background="#A3BD0A"
+        android:text="Scrape"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="18dp" />
+
+
+
+</RelativeLayout>
