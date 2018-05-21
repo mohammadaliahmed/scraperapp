@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.appsinventiv.numberscraper.R;
 import com.appsinventiv.numberscraper.Utils.CommonUtils;
+import com.appsinventiv.numberscraper.Utils.Constants;
 import com.appsinventiv.numberscraper.Utils.SharedPrefs;
 
 import java.util.ArrayList;
@@ -48,10 +49,10 @@ public class HistoryFilesAdapter extends RecyclerView.Adapter<HistoryFilesAdapte
 
         final String model = itemList.get(position);
 
-        String abc = model.replace("http://getnumbers.co/app/files/", "");
+        String abc = model.replace(Constants.TEXT_FILES, "");
         abc = abc.replace("-", " ");
-        abc = abc.replace(".txt", "");
-        abc = abc.replace("/", "");
+        abc = abc.replace("olx", "-olx");
+        abc = abc.replace("/", "").replace(" ","");
         abc = abc.replace(SharedPrefs.getUsername(), "");
 
 

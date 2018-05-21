@@ -35,14 +35,7 @@ public class Option extends AppCompatActivity {
         pakwheels = (Button) findViewById(R.id.pakwheels);
 
         zameen = (Button) findViewById(R.id.zameen);
-        zameen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Option.this, Zameen.class);
-                startActivity(i);
-                finish();
-            }
-        });
+
         olx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,18 +60,7 @@ public class Option extends AppCompatActivity {
                 }
             }
         });
-        pakwheels.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (SharedPrefs.getIsLoggedIn().equals("yes")) {
-                    Intent i = new Intent(Option.this, Pakwheels.class);
-                    startActivity(i);
-                } else {
-                    Intent i = new Intent(Option.this, Login.class);
-                    startActivity(i);
-                }
-            }
-        });
+
         history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

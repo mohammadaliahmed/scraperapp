@@ -36,7 +36,7 @@ public class CommonUtils {
 
 
     public static String getFilename(String url){
-        String abc = url.replace("http://getnumbers.co/app/files/", "");
+        String abc = url.replace("http://getnumbers.co/withnames/", "");
         abc = abc.replace("-", " ");
         abc = abc.replace(".txt", "");
         abc = abc.replace("/", "");

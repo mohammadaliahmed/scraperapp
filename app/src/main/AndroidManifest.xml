@@ -25,14 +25,8 @@
         </activity>
         <activity android:name=".Registration.Login" />
         <activity android:name=".Registration.Signup" />
-        <activity android:name=".DemoAccount" />
         <activity android:name=".ProActivity" />
         <activity android:name=".Option" />
-        <activity android:name=".Pakwheels" />
-        <activity android:name=".DonePakwheels" />
-        <activity android:name=".PakwheelsDemo" />
-        <activity android:name=".Zameen" />
-        <activity android:name=".DoneZameen" />
         <activity
             android:name=".History"
             android:theme="@style/AppTheme1"></activity>

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import com.appsinventiv.numberscraper.Olx.OlxScraperObserver;
 import com.appsinventiv.numberscraper.Utils.CommonUtils;
+import com.appsinventiv.numberscraper.Utils.Constants;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -37,7 +38,7 @@ public class BackgroundWorker extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String webUrl = "http://getnumbers.co/app/ali.php";
+        String webUrl = Constants.LINK;
         if (type.equals("login")) {
             try {
                 URL url = new URL(webUrl);

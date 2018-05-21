@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.appsinventiv.numberscraper.Adapters.HistoryFilesAdapter;
 import com.appsinventiv.numberscraper.Interface.UserClient;
 import com.appsinventiv.numberscraper.Utils.CommonUtils;
+import com.appsinventiv.numberscraper.Utils.Constants;
 import com.appsinventiv.numberscraper.Utils.DownloadFile;
 import com.appsinventiv.numberscraper.Utils.SharedPrefs;
 import com.google.gson.Gson;
@@ -29,8 +30,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class History extends AppCompatActivity implements SearchView.OnQueryTextListener {
     HistoryFilesAdapter adapter;
-    ArrayList<String> itemList=new ArrayList<>();
-    ArrayList<String> itemList1=new ArrayList<>();
+    ArrayList<String> itemList = new ArrayList<>();
+    ArrayList<String> itemList1 = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class History extends AppCompatActivity implements SearchView.OnQueryText
         adapter = new HistoryFilesAdapter(this, itemList, new HistoryFilesAdapter.WhichFileToDownload() {
             @Override
             public void onClick(String url) {
-                DownloadFile.fromUrl(url,CommonUtils.getFilename(url));
+                DownloadFile.fromUrl(url, CommonUtils.getFilename(url));
             }
         });
         recyclerViewApple.setAdapter(adapter);
@@ -55,11 +56,9 @@ public class History extends AppCompatActivity implements SearchView.OnQueryText
 
     private void getDataFromServer() {
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://getnumbers.co/app/")
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create());
         final HashMap<String, String> map = new HashMap<>();
-        map.put("userId", "4");
-        map.put("createdAt", "0");
         JSONObject json = new JSONObject(map);
         Retrofit retrofit = builder.build();
         UserClient client = retrofit.create(UserClient.class);
@@ -70,8 +69,8 @@ public class History extends AppCompatActivity implements SearchView.OnQueryText
 
                 Gson gson = new Gson();
 
-                for (int i=0;i<response.body().getFiles().size();i++){
-                    if(response.body().getFiles().get(i).contains(SharedPrefs.getUsername())) {
+                for (int i = 0; i < response.body().getFiles().size(); i++) {
+                    if (response.body().getFiles().get(i).contains(SharedPrefs.getUsername())) {
                         itemList.add(response.body().getFiles().get(i));
                         itemList1.add(response.body().getFiles().get(i));
 
@@ -83,9 +82,7 @@ public class History extends AppCompatActivity implements SearchView.OnQueryText
 
             @Override
             public void onFailure(Call<FilesHistoryModel> call, Throwable t) {
-//                Log.d("abcc",""+t);
-                CommonUtils.showToast(t+"");
-//                Toast.makeText(MainActivity.this, ""+t, Toast.LENGTH_SHORT).show();
+                CommonUtils.showToast(t + "");
             }
         });
 
@@ -109,8 +106,8 @@ public class History extends AppCompatActivity implements SearchView.OnQueryText
     @Override
     public boolean onQueryTextChange(String newText) {
         itemList.clear();
-        for(String item:itemList1){
-            if(item.contains(newText)){
+        for (String item : itemList1) {
+            if (item.contains(newText)) {
                 itemList.add(item);
                 adapter.notifyDataSetChanged();
             }
