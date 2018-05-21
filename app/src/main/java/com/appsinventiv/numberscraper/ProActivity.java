@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.appsinventiv.numberscraper.Olx.MainActivity;
+import com.appsinventiv.numberscraper.Utils.SharedPrefs;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +33,7 @@ Button verifiy, call;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pro);
 
+
         userPref = getSharedPreferences("userDetails", Context.MODE_PRIVATE);
         username=userPref.getString("username","");
         verifiy=(Button)findViewById(R.id.verify);
@@ -50,52 +53,43 @@ Button verifiy, call;
         verifiy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    if (isConnected()) {
-                        codeEntered = code.getText().toString();
-                        mDatabase.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                UserDetails user = dataSnapshot.child("userDetails").getValue(UserDetails.class);
-                                if (user != null) {
-                                    if (codeEntered.equals(user.getCode())) {
-                                        mDatabase.child("userDetails").child("isDemo").setValue("no");
-                                        Toast.makeText(ProActivity.this, "Thank you for purchasing", Toast.LENGTH_SHORT).show();
-                                        SharedPreferences pref = getSharedPreferences("userDetails", Context.MODE_PRIVATE);
-                                        SharedPreferences.Editor editor2 = pref.edit();
-                                        editor2.apply();
-                                        Intent i = new Intent(ProActivity.this, MainActivity.class);
-                                        startActivity(i);
-                                        finish();
-                                    } else {
-                                        Toast.makeText(ProActivity.this, "Wrong code", Toast.LENGTH_SHORT).show();
-                                    }
-
+                if(code.getText().toString().length()==0){
+                    code.setError("Please enter code");
+                }else {
+                    codeEntered = code.getText().toString();
+                    mDatabase.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            UserDetails user = dataSnapshot.child("userDetails").getValue(UserDetails.class);
+                            if (user != null) {
+                                if (codeEntered.equals(user.getCode())) {
+                                    mDatabase.child("userDetails").child("isDemo").setValue("no");
+                                    Toast.makeText(ProActivity.this, "Thank you for purchasing", Toast.LENGTH_SHORT).show();
+                                    SharedPreferences pref = getSharedPreferences("userDetails", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor2 = pref.edit();
+                                    editor2.apply();
+                                    Intent i = new Intent(ProActivity.this, MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                } else {
+                                    Toast.makeText(ProActivity.this, "Wrong code", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
 
                             }
-                        });
+                        }
 
-                    }else {
-                        Toast.makeText(ProActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
+
             }
 
         });
 
 
     }
-    public boolean isConnected() throws InterruptedException, IOException {
-        String command = "ping -c 1 google.com";
-        return (Runtime.getRuntime().exec(command).waitFor() == 0);
-    }
+
 }

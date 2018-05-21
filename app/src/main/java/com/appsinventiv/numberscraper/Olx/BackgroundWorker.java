@@ -1,7 +1,10 @@
-package com.appsinventiv.numberscraper;
+package com.appsinventiv.numberscraper.Olx;
 
 import android.content.Context;
 import android.os.AsyncTask;
+
+import com.appsinventiv.numberscraper.Olx.OlxScraperObserver;
+import com.appsinventiv.numberscraper.Utils.CommonUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -16,22 +19,25 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 /**
- * Created by maliahmed on 11/25/2017.
+ * Created by M Ali Ahmed on 8/25/2017.
  */
 
-public class BackgroundPakwheels extends AsyncTask<String, Void, String> {
+public class BackgroundWorker extends AsyncTask<String, Void, String> {
     Context context;
+    int pageNumber;
+    OlxScraperObserver observer;
 
 
-    public BackgroundPakwheels(Context ctx) {
-        context = ctx;
+    public BackgroundWorker(Context ctx,OlxScraperObserver observer) {
+        this.context = ctx;
+        this.observer=observer;
 
     }
 
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String webUrl = "http://getnumbers.co/app/pakwheels.php";
+        String webUrl = "http://getnumbers.co/app/ali.php";
         if (type.equals("login")) {
             try {
                 URL url = new URL(webUrl);
@@ -39,6 +45,7 @@ public class BackgroundPakwheels extends AsyncTask<String, Void, String> {
                 String page = params[2];
                 String file = params[3];
                 String links = params[4];
+                pageNumber=Integer.parseInt(page);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.setDoInput(true);
@@ -85,7 +92,15 @@ public class BackgroundPakwheels extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        observer.onPageDone(pageNumber);
+//        CommonUtils.showToast("Done");
 
+    }
+
+    @Override
+    protected void onCancelled(String s) {
+        CommonUtils.showToast("Cancelled");
+        super.onCancelled(s);
     }
 
     @Override

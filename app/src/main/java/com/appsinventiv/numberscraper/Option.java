@@ -8,57 +8,102 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.appsinventiv.numberscraper.Olx.MainActivity;
+import com.appsinventiv.numberscraper.Registration.Login;
+import com.appsinventiv.numberscraper.Utils.CommonUtils;
+import com.appsinventiv.numberscraper.Utils.SharedPrefs;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class Option extends AppCompatActivity {
-Button olx,pakwheels;
+    Button olx, pakwheels, zameen, history;
     private SharedPreferences userPref;
     String demoPref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
 
-        userPref = getSharedPreferences("userDetails", Context.MODE_PRIVATE);
-        demoPref = userPref.getString("demo", "yes");
 
-        olx= (Button) findViewById(R.id.olx);
-        pakwheels= (Button) findViewById(R.id.pakwheels);
+        olx = (Button) findViewById(R.id.olx);
+        history = (Button) findViewById(R.id.history);
+        pakwheels = (Button) findViewById(R.id.pakwheels);
 
+        zameen = (Button) findViewById(R.id.zameen);
+        zameen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Option.this, Zameen.class);
+                startActivity(i);
+                finish();
+            }
+        });
         olx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen(demoPref);
+
+                if (SharedPrefs.getIsLoggedIn().equals("yes")) {
+                    if (SharedPrefs.getIsDemo().equals("yes")) {
+                        if (Integer.parseInt(SharedPrefs.getDemoCount()) <= 0) {
+                            CommonUtils.showToast("Your demo is over\nPlease purchase. Thanks!");
+                            Intent i = new Intent(Option.this, ProActivity.class);
+                            startActivity(i);
+                        } else {
+                            Intent i = new Intent(Option.this, MainActivity.class);
+                            startActivity(i);
+                        }
+                    } else {
+                        Intent i = new Intent(Option.this, MainActivity.class);
+                        startActivity(i);
+                    }
+                } else {
+                    Intent i = new Intent(Option.this, Login.class);
+                    startActivity(i);
+                }
             }
         });
         pakwheels.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchHomeScreen2(demoPref);
+                if (SharedPrefs.getIsLoggedIn().equals("yes")) {
+                    Intent i = new Intent(Option.this, Pakwheels.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(Option.this, Login.class);
+                    startActivity(i);
+                }
+            }
+        });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (SharedPrefs.getIsLoggedIn().equals("yes")) {
+                    Intent i = new Intent(Option.this, History.class);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(Option.this, Login.class);
+                    startActivity(i);
+                }
+
+
             }
         });
     }
+
     private void launchHomeScreen(String demo) {
-        if(demo.equals("no")) {
-            Intent i = new Intent(Option.this, MainActivity.class);
-            startActivity(i);
-            finish();
-        }else{
-            Intent i = new Intent(Option.this, DemoAccount.class);
-            startActivity(i);
-            finish();
-        }
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
 
     }
+
     private void launchHomeScreen2(String demo) {
-        if(demo.equals("no")) {
-            Intent i = new Intent(Option.this, Pakwheels.class);
-            startActivity(i);
-            finish();
-        }else{
-            Intent i = new Intent(Option.this, PakwheelsDemo.class);
-            startActivity(i);
-            finish();
-        }
+
 
     }
 }

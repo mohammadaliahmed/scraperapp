@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appsinventiv.numberscraper.Olx.Done;
+import com.appsinventiv.numberscraper.Olx.MainActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -198,8 +200,8 @@ public class DemoAccount extends AppCompatActivity {
         filename=filename+"-olx-"+username;
         String type = "login";
         String linksFile = username+"-olx-linksFile";
-        BackgroundWorker backgroundworker = new BackgroundWorker(DemoAccount.this);
-        backgroundworker.execute(type, urlphp, pg, filename,linksFile);
+//        BackgroundWorker backgroundworker = new BackgroundWorker(DemoAccount.this);
+//        backgroundworker.execute(type, urlphp, pg, filename,linksFile);
 
     }
 

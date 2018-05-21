@@ -4,83 +4,87 @@
     android:id="@+id/activity_done"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   android:padding="10dp"
     android:background="@drawable/sd"
-    tools:context="com.appsinventiv.numberscraper.Done">
+    android:padding="10dp"
+    tools:context="com.appsinventiv.numberscraper.Olx.Done">
 
     <TextView
-        android:text=""
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="107dp"
-        android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textStyle="normal|bold"
-        android:textAllCaps="false"
-        android:typeface="monospace"
+        android:layout_marginTop="107dp"
         android:fontFamily="serif"
-        android:textSize="35dp" />
+        android:text=""
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textStyle="normal|bold"
+        android:typeface="monospace" />
 
     <Button
-    android:text="Download"
-    android:minWidth="250dp"
-    android:textColor="#fff"
-    android:textSize="18dp"
-        android:padding="10dp"
-
-    android:background="#A3BD0A"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/button3"
-    android:layout_marginTop="160dp"
-    android:layout_weight="1"
-    android:textAllCaps="false"
-    android:layout_below="@+id/textView3"
-    android:layout_centerHorizontal="true" />
-    <Button
-        android:text="Download"
-        android:minWidth="250dp"
-        android:textColor="#fff"
-        android:textSize="18dp"
-android:padding="10dp"
-        android:background="@color/colorPrimaryDark"
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/vcfdownload"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginTop="160dp"
         android:layout_weight="1"
+        android:background="#A3BD0A"
+        android:minWidth="250dp"
+        android:padding="10dp"
+        android:text="Download"
         android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="18dp" />
+
+    <Button
+        android:id="@+id/vcfdownload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/button3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:minWidth="250dp"
+        android:padding="10dp"
+        android:text="Download"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="18dp" />
+
+
 
     <TextView
-        android:text="Please Wait for"
-        android:textSize="20dp"
-        android:textColor="#000"
-
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:id="@+id/textView4" />
+        android:text=""
+        android:textColor="#000"
+        android:textSize="20dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="66dp" />
 
     <Button
-        android:id="@+id/pro"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_margin="5dp"
-        android:layout_alignParentEnd="true"
-
-
-        android:layout_weight="1"
-
-        android:background="#4F007D"
-        android:text="Tired of waiting? Buy pro"
-        android:textAllCaps="false"
-        android:textColor="#fff"
-        android:textSize="15dp"
+        android:id="@+id/cancel"
+        android:text="Cancel"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="#c60003"
+        android:textColor="#fff" />
 </RelativeLayout>

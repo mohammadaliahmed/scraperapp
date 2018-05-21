@@ -25,10 +25,12 @@
 
         <EditText
             android:id="@+id/username_signup_field"
-            android:inputType="textCapSentences"
+            android:inputType="text|textNoSuggestions"
             android:layout_width="match_parent"
             android:maxLines="1"
             android:singleLine="true"
+            android:digits="abcdefghijklmnopqrstuvwxyz"
+
             android:layout_height="wrap_content"
             android:hint="Username" />
     </android.support.design.widget.TextInputLayout>
@@ -44,6 +46,7 @@
             android:id="@+id/email_signup_field"
             android:layout_width="match_parent"
             android:maxLines="1"
+            android:inputType="textEmailAddress"
             android:singleLine="true"
             android:layout_height="wrap_content"
             android:hint="Email" />
@@ -53,6 +56,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textInputLayout13"
+        app:passwordToggleEnabled="true"
         android:layout_below="@+id/textInputLayout14"
         android:layout_alignParentStart="true">
 
@@ -76,6 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:inputType="phone"
             android:singleLine="true"
             android:hint="Phone" />
     </android.support.design.widget.TextInputLayout>

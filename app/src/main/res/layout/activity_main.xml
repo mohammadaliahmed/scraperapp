@@ -8,7 +8,7 @@
 android:padding="16dp"
     android:background="@drawable/sd"
 
-    tools:context="com.appsinventiv.numberscraper.MainActivity">
+    tools:context="com.appsinventiv.numberscraper.Olx.MainActivity">
 
 
     <TextView
@@ -55,6 +55,7 @@ android:padding="16dp"
         <EditText
             android:layout_width="match_parent"
             android:maxLines="1"
+            android:inputType="number"
             android:singleLine="true"
             android:layout_height="wrap_content"
             android:hint="Start page.."
@@ -72,6 +73,7 @@ android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:inputType="number"
             android:singleLine="true"
             android:hint="End page.." />
     </android.support.design.widget.TextInputLayout>
@@ -89,7 +91,9 @@ android:padding="16dp"
             android:id="@+id/filen"
             android:layout_width="match_parent"
             android:maxLines="1"
+            android:inputType="text|textNoSuggestions"
             android:singleLine="true"
+            android:digits="abcdefghijklmnopqrstuvwxyz1234567890-_"
             android:layout_height="wrap_content"
             android:hint="Filename.." />
     </android.support.design.widget.TextInputLayout>
@@ -109,5 +113,18 @@ android:padding="16dp"
         android:textAllCaps="false"
         android:textColor="#fff"
         android:textSize="18dp" />
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/demoText"
+        android:padding="5dp"
+        android:text="you are in demo version"
+        android:background="#d90000"
+        android:textColor="#fff"
+
+        android:layout_below="@id/search"
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

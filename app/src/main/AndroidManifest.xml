@@ -2,21 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appsinventiv.numberscraper">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".NumberScraperApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.appsinventiv.numberscraper.MainActivity" />
-        <activity android:name="com.appsinventiv.numberscraper.Done" />
-        <activity android:name="com.appsinventiv.numberscraper.Splash">
+        <activity android:name=".Olx.MainActivity" />
+        <activity android:name=".Olx.Done" />
+        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,12 +25,17 @@
         </activity>
         <activity android:name=".Registration.Login" />
         <activity android:name=".Registration.Signup" />
-        <activity android:name="com.appsinventiv.numberscraper.DemoAccount" />
-        <activity android:name="com.appsinventiv.numberscraper.ProActivity" />
-        <activity android:name="com.appsinventiv.numberscraper.Option" />
-        <activity android:name="com.appsinventiv.numberscraper.Pakwheels" />
-        <activity android:name="com.appsinventiv.numberscraper.DonePakwheels" />
-        <activity android:name="com.appsinventiv.numberscraper.PakwheelsDemo"></activity>
+        <activity android:name=".DemoAccount" />
+        <activity android:name=".ProActivity" />
+        <activity android:name=".Option" />
+        <activity android:name=".Pakwheels" />
+        <activity android:name=".DonePakwheels" />
+        <activity android:name=".PakwheelsDemo" />
+        <activity android:name=".Zameen" />
+        <activity android:name=".DoneZameen" />
+        <activity
+            android:name=".History"
+            android:theme="@style/AppTheme1"></activity>
     </application>
 
 </manifest>

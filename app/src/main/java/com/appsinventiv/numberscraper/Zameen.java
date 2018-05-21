@@ -1,6 +1,5 @@
 package com.appsinventiv.numberscraper;
 
-import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +8,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,29 +24,27 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 
-
-public class MainActivity extends AppCompatActivity {
+public class Zameen extends AppCompatActivity {
     EditText getUrl, start, end, filen;
     Button search;
     String urlphp;
 
     static String filename;
-      static int st, en;
-     static  int i;
+    static int st, en;
+    static  int i;
     private SharedPreferences userPref;
     String username;
     int versionCode;
-DatabaseReference mDatabase;
-
+    DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDatabase=FirebaseDatabase.getInstance().getReference();
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_zameen);
+        mDatabase= FirebaseDatabase.getInstance().getReference();
         try {
             PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = pInfo.versionName;
-             versionCode=pInfo.versionCode;
+            versionCode=pInfo.versionCode;
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -60,8 +57,8 @@ DatabaseReference mDatabase;
                 AppVersion appVersion = dataSnapshot.child("appVersion").getValue(AppVersion.class);
                 if (appVersion != null) {
                     if (appVersion.getAppVersion() > versionCode) {
-                        Toast.makeText(MainActivity.this, "Please update to new version", Toast.LENGTH_LONG).show();
-                        Uri uri = Uri.parse("market://details?id=" + MainActivity.this.getPackageName());
+                        Toast.makeText(Zameen.this, "Please update to new version", Toast.LENGTH_LONG).show();
+                        Uri uri = Uri.parse("market://details?id=" + Zameen.this.getPackageName());
                         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                         // To count with Play market backstack, After pressing back button,
                         // to taken back to our application, we need to add following flags to intent.
@@ -72,7 +69,7 @@ DatabaseReference mDatabase;
                             startActivity(goToMarket);
                         } catch (ActivityNotFoundException e) {
                             startActivity(new Intent(Intent.ACTION_VIEW,
-                                    Uri.parse("http://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName())));
+                                    Uri.parse("http://play.google.com/store/apps/details?id=" + Zameen.this.getPackageName())));
                         }
                     }
                 }
@@ -95,8 +92,8 @@ DatabaseReference mDatabase;
                         SharedPreferences.Editor editor2 = pref.edit();
                         editor2.putString("demo", "yes");
                         editor2.apply();
-//                        Toast.makeText(MainActivity.this, "Premium time over\nPlease purchase :)", Toast.LENGTH_LONG).show();
-                        Intent i=new Intent(MainActivity.this,DemoAccount.class);
+//                        Toast.makeText(Pakwheels.this, "Premium time over\nPlease purchase :)", Toast.LENGTH_LONG).show();
+                        Intent i=new Intent(Zameen.this,PakwheelsDemo.class);
                         startActivity(i);
                         finish();
                     }
@@ -111,7 +108,7 @@ DatabaseReference mDatabase;
 
 
         int PERMISSION_ALL = 1;
-        String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] PERMISSIONS = {android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE};
 
         if(!hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
@@ -134,11 +131,11 @@ DatabaseReference mDatabase;
         urlphp = getUrl.getText().toString();
         //page=start.getText().toString();
         filename = filen.getText().toString();
-        filename=filename+"-olx-"+username;
+        filename=filename+"-zameen-"+username;
         String type = "login";
-        String linksFile = username+"-olx-linksFile";
-        BackgroundWorker backgroundworker = new BackgroundWorker(MainActivity.this);
-        backgroundworker.execute(type, urlphp, pg, filename,linksFile);
+        String linksFile = username+"-zameen-linksFile";
+        BackgroundZameen  backgroundZameen = new BackgroundZameen(Zameen.this);
+        backgroundZameen.execute(type, urlphp, pg, filename,linksFile);
 
     }
 
@@ -151,47 +148,47 @@ DatabaseReference mDatabase;
                         if (getUrl.getText().toString().length() == 0|| getUrl.getText().equals("")) {
                             getUrl.setError("Url is required!");
                         }
-                    else if (start.getText().toString().length() == 0 ||start.getText().equals("")) {
+                        else if (start.getText().toString().length() == 0 ||start.getText().equals("")) {
 
-                        start.setError("Start page is required!");
-                    }
-                    else if (end.getText().toString().length() == 0||end.getText().equals("") ){
-                        end.setError("End page is required!");
-                    }
-                    else if (filen.getText().toString().length() == 0||filen.getText().equals("")) {
+                            start.setError("Start page is required!");
+                        }
+                        else if (end.getText().toString().length() == 0||end.getText().equals("") ){
+                            end.setError("End page is required!");
+                        }
+                        else if (filen.getText().toString().length() == 0||filen.getText().equals("")) {
 
-                        filen.setError("File name is required!");
-                    }
+                            filen.setError("File name is required!");
+                        }
 
-                    else if(getUrl.getText().toString().contains("?page=")) {
+                        else if(getUrl.getText().toString().contains("?page=")) {
                             getUrl.setError("Url is not correct");
                         }
-                       else if(!getUrl.getText().toString().contains("olx.com.pk")) {
-                            getUrl.setError("This is not an OLX Url");
+                        else if(!getUrl.getText().toString().contains("zameen")) {
+                            getUrl.setError("This is not an Zameen.com Url");
                         }
-                    else {
+                        else {
 
-                        st = Integer.parseInt(start.getText().toString());
-                        en = Integer.parseInt(end.getText().toString());
+                            st = Integer.parseInt(start.getText().toString());
+                            en = Integer.parseInt(end.getText().toString());
 
-                        Thread t = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                for (i = st; i <= en; i++) {
+                            Thread t = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    for (i = st; i <= en; i++) {
 
-                                    phpRequest(String.valueOf(i));
+                                        phpRequest(String.valueOf(i));
 
+                                    }
                                 }
-                            }
-                        });
-                        t.start();
+                            });
+                            t.start();
 
-                        Intent i = new Intent(MainActivity.this, Done.class);
-                        startActivity(i);
+                            Intent i = new Intent(Zameen.this, DoneZameen.class);
+                            startActivity(i);
+
+                        }
 
                     }
-
-                }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -221,4 +218,3 @@ DatabaseReference mDatabase;
     }
 
 }
-

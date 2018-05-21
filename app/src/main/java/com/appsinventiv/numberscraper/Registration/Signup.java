@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,11 +13,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appsinventiv.numberscraper.MainActivity;
+import com.appsinventiv.numberscraper.Olx.MainActivity;
 import com.appsinventiv.numberscraper.Option;
 import com.appsinventiv.numberscraper.PrefManager;
 import com.appsinventiv.numberscraper.R;
 import com.appsinventiv.numberscraper.UserDetails;
+import com.appsinventiv.numberscraper.Utils.CommonUtils;
+import com.appsinventiv.numberscraper.Utils.SharedPrefs;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,13 +41,14 @@ public class Signup extends AppCompatActivity {
 
     DatabaseReference mDatabase;
     String currentDateTimeString;
-//    private PrefManager prefManager;
+    //    private PrefManager prefManager;
     ProgressDialog pd;
 
     private PrefManager prefManager;
 
 
     List<String> userNameList = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,53 +84,39 @@ public class Signup extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    isConnected();
-                    if (isConnected()) {
-                        //Toast.makeText(Signup.this, "connected", Toast.LENGTH_SHORT).show();
-                        if (username.getText().toString().length() == 0) {
-                            username.setError("A username is required!");
-                        } else if (username.getText().toString().length() > 0 && username.getText().toString().length() < 6) {
-                            username.setError("Atleast 6 characters required");
-                        } else if (email.getText().toString().length() == 0) {
-                            email.setError("Email adress cannot be left blank!");
-                        } else if (password.getText().toString().length() == 0) {
-                            password.setError("Password cannot be left blank!");
-                        } else if (password.getText().toString().length() > 0 && password.getText().toString().length() < 8) {
-                            password.setError("Atleast set 8 character password");
-                        } else if (phone.getText().toString().length() == 0) {
-                            phone.setError("Phone number cannot be left blank!");
-                        } else {
-                            pd.setMessage("Loging in..");
-                            pd.setTitle("Please Wait..");
-                            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+                //Toast.makeText(Signup.this, "connected", Toast.LENGTH_SHORT).show();
+                if (username.getText().toString().length() == 0) {
+                    username.setError("A username is required!");
+                } else if (username.getText().toString().length() > 0 && username.getText().toString().length() < 6) {
+                    username.setError("Atleast 6 characters required");
+                } else if (email.getText().toString().length() == 0) {
+                    email.setError("Email adress cannot be left blank!");
+                } else if (password.getText().toString().length() == 0) {
+                    password.setError("Password cannot be left blank!");
+                } else if (password.getText().toString().length() > 0 && password.getText().toString().length() < 8) {
+                    password.setError("Atleast set 8 character password");
+                } else if (phone.getText().toString().length() == 0) {
+                    phone.setError("Phone number cannot be left blank!");
+                } else {
+                    pd.setMessage("Loging in..");
+                    pd.setTitle("Please Wait..");
+                    pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 //                            pd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFD4D9D0")));
-                            pd.show();
-                            setUserDetails();
+                    pd.show();
+                    setUserDetails();
 
 
-                        }
-                    } else {
-                        Toast.makeText(Signup.this, "No Internet Connection\nPlease turn on Wifi", Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
 
 
             }
         });
     }
-    public boolean isConnected() throws InterruptedException, IOException {
-        String command = "ping -c 1 google.com";
-        return (Runtime.getRuntime().exec(command).waitFor() == 0);
-    }
+
     private void setUserDetails() {
 
-        String userName, emailId, phoneNumber, pass;
+        final String userName, emailId, phoneNumber, pass;
         userName = username.getText().toString().toLowerCase();
         emailId = email.getText().toString();
 
@@ -156,7 +148,6 @@ public class Signup extends AppCompatActivity {
             }
 
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -169,26 +160,32 @@ public class Signup extends AppCompatActivity {
                 Toast.makeText(this, "Username is taken\nPlease choose another", Toast.LENGTH_SHORT).show();
 
             } else {
-                String string= Long.toHexString(Double.doubleToLongBits(Math.random()));
-                mDatabase.child(userName).child("userDetails").setValue(new UserDetails(userName,emailId,pass,phoneNumber,"yes",string));
+                String string = Long.toHexString(Double.doubleToLongBits(Math.random()));
+                mDatabase.child(userName).child("userDetails").setValue(new UserDetails(userName, emailId, pass, phoneNumber, "yes", string)).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(Signup.this, "Sign up Successful", Toast.LENGTH_SHORT).show();
+                        SharedPrefs.setUsername(userName);
+                        SharedPrefs.setIsLoggedIn("yes");
+                        SharedPrefs.setDemoCount(""+5);
+                        SharedPrefs.setIsDemo("yes");
+                        launchHomeScreen();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        CommonUtils.showToast("Error");
+                    }
+                });
 
-                SharedPreferences pref = getSharedPreferences("userDetails", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
 
-                editor.putString("username", userName);
-                editor.putString("demo", "yes");
-                editor.apply();
-
-                Toast.makeText(this, "Sign up Successful", Toast.LENGTH_SHORT).show();
-                launchHomeScreen();
-
-
-                Intent i=new Intent(Signup.this,MainActivity.class);
+                Intent i = new Intent(Signup.this, MainActivity.class);
                 finish();
 
             }
         }
     }
+
     private void launchHomeScreen() {
         prefManager.setFirstTimeLaunch(false);
         pd.dismiss();

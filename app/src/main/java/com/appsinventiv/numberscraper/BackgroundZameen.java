@@ -16,14 +16,14 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 /**
- * Created by maliahmed on 11/25/2017.
+ * Created by AliAh on 25/02/2018.
  */
 
-public class BackgroundPakwheels extends AsyncTask<String, Void, String> {
+public class BackgroundZameen extends AsyncTask<String, Void, String> {
     Context context;
 
 
-    public BackgroundPakwheels(Context ctx) {
+    public BackgroundZameen(Context ctx) {
         context = ctx;
 
     }
@@ -31,7 +31,7 @@ public class BackgroundPakwheels extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String webUrl = "http://getnumbers.co/app/pakwheels.php";
+        String webUrl = "http://getnumbers.co/app/zameen.php";
         if (type.equals("login")) {
             try {
                 URL url = new URL(webUrl);
