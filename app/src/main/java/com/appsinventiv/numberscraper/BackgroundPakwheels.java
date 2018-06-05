@@ -21,10 +21,13 @@ import java.net.URLEncoder;
 
 public class BackgroundPakwheels extends AsyncTask<String, Void, String> {
     Context context;
+    PakwheelsOberservor oberservor;
+    int pageNumber;
 
 
-    public BackgroundPakwheels(Context ctx) {
+    public BackgroundPakwheels(Context ctx,PakwheelsOberservor oberservor) {
         context = ctx;
+        this.oberservor=oberservor;
 
     }
 
@@ -37,6 +40,7 @@ public class BackgroundPakwheels extends AsyncTask<String, Void, String> {
                 URL url = new URL(webUrl);
                 String url_g = params[1];
                 String page = params[2];
+                pageNumber=Integer.parseInt(page);
                 String file = params[3];
                 String links = params[4];
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -85,6 +89,7 @@ public class BackgroundPakwheels extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        oberservor.onPageDone(pageNumber);
 
     }
 

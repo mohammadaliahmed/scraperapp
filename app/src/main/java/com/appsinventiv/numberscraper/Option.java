@@ -71,8 +71,19 @@ public class Option extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (SharedPrefs.getIsLoggedIn().equals("yes")) {
-                    Intent i = new Intent(Option.this, Pakwheels.class);
-                    startActivity(i);
+                    if (SharedPrefs.getIsDemo().equals("yes")) {
+                        if (Integer.parseInt(SharedPrefs.getDemoCount()) <= 0) {
+                            CommonUtils.showToast("Your demo is over\nPlease purchase. Thanks!");
+                            Intent i = new Intent(Option.this, ProActivity.class);
+                            startActivity(i);
+                        } else {
+                            Intent i = new Intent(Option.this, Pakwheels.class);
+                            startActivity(i);
+                        }
+                    } else {
+                        Intent i = new Intent(Option.this, Pakwheels.class);
+                        startActivity(i);
+                    }
                 } else {
                     Intent i = new Intent(Option.this, Login.class);
                     startActivity(i);

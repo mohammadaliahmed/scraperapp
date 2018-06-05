@@ -198,8 +198,8 @@ public class PakwheelsDemo extends AppCompatActivity {
         filename=filename+"-pakwheels-"+username;
         String type = "login";
         String linksFile = username+"-pakwheels-linksFile";
-        BackgroundPakwheels backgroundPakwheels = new BackgroundPakwheels(PakwheelsDemo.this);
-        backgroundPakwheels.execute(type, urlphp, pg, filename,linksFile);
+//        BackgroundPakwheels backgroundPakwheels = new BackgroundPakwheels(Pak.this);
+//        backgroundPakwheels.execute(type, urlphp, pg, filename,linksFile);
 
     }
 

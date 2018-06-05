@@ -23,10 +23,6 @@ public class Done extends AppCompatActivity {
     TextView text1, t4;
     Button btn, btn2, pro, cancel;
 
-    private SharedPreferences userPref;
-    String demo;
-
-    DownloadManager downloadManager;
     String filename;
     ProgressBar progressBar2;
     int cPage, ePage;
